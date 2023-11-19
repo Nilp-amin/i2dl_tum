@@ -57,6 +57,9 @@ class Classifier(Network):
         # Also, save in self.cache an array of all the relevant variables that #
         # you will need to use in the backward() function. E.g.: (X, ...)      #
         ########################################################################
+        s = X @ self.W
+        z = self.sigmoid(s)
+        self.cache = {"X": X, "s": s}
 
 
         pass
@@ -93,6 +96,9 @@ class Classifier(Network):
         # Hint 2: Remember that the derivative of sigmoid(x) is independent of #
         # x, and could be calculated with the result from the forward pass.    #
         ########################################################################
+        X = self.cache["X"]
+        s = self.cache["s"]
+        dW = X.T @ ((self.sigmoid(s) * (1 - self.sigmoid(s))) * dout)
 
 
         pass
@@ -116,6 +122,7 @@ class Classifier(Network):
         # Implement the sigmoid function over the input x. Return "out".       #
         # Note: The sigmoid() function operates element-wise.                  #
         ########################################################################
+        out = 1 / (1 + np.exp(-x))
 
 
         pass

@@ -120,7 +120,12 @@ class BCE(Loss):
         #   Have a look at the school implementation of the L1 (MAE) and the   #
         #   MSE loss, and observe how the individual losses are dealt with.    #
         ########################################################################
+        result = -(y_truth * np.log(y_out) + (1 - y_truth) * np.log(1 - y_out))
 
+        if individual_losses:
+            return result
+
+        return sum(result) / len(y_truth)
 
         pass
 
@@ -150,6 +155,7 @@ class BCE(Loss):
         #   Don't forget to divide by N, which is the number of samples in     #
         #   the batch. It is crucial for the magnitude of the gradient.        #
         ########################################################################
+        gradient = -1/len(y_truth) * (y_truth / y_out - (1 - y_truth) / (1 - y_out))
 
 
         pass
